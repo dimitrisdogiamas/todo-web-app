@@ -146,25 +146,34 @@
         // step 1 - initialize our list of todos && display the todos
 
         let mainContainer = document.querySelector('main')
-        let addBtn = document.getElementById('addBtn')
+        let addBtn = document.getElementById('addBtn') //we target the button 
         let todoInput = document.getElementById('todoInput')
 
         let todo_list = localStorage.getItem('todo-list') ? JSON.parse(localStorage.getItem('todo-list')).todo_list : []
+        // the local storage checks if tge object is existing with the name given and returns string or null if it doesn't 
 
+
+        // json.parse converts the string to an object 
+
+        // last it checks if the todo-list exists to take the todo-list property from the object that has been returned. If the object does not exist or the value is null then it returns an empty array 
+
+
+            // this will paint all of our todos 
         function paintUI() {
-            let new_inner_html = ''
-            for (let i = 0; i < todo_list.length; i++) {
+            let new_inner_html = ''//we add a string 
+            // we loop at the table till the end of the length 
+            for (let i = 0; i < todo_list.length; i++)  {
                 const todo = todo_list[i]
                 new_inner_html += `
                 <div class="todoItem">
                     <p>${todo}</p>
                     <div class="actionsContainer">
-                        <button onclick="editTodo(${i})"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button onclick="editTodo(${i})"><i class="fa-solid fa-pen-to-square"></i></button> 
                         <button onclick="deleteTodo(${i})"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>
                 `
-            }
+            } //this button onclick="delete todo helps me delete a todo that i want and makes the web app functional "
             mainContainer.innerHTML = new_inner_html
             saveData()
         }
@@ -174,15 +183,15 @@
         // step 2 - write a function that allows us to add a new todo
 
         function addTodo() {
-            let current_todo = todoInput.value
-            if (!current_todo) { return }
+            let current_todo = todoInput.value //this accesses the value that we type to the bar 
+            if (!current_todo) { return } // the empty return means we dont return if we don't have value 
 
             todo_list.push(current_todo)
-            todoInput.value = ''
+            todoInput.value = '' //reset the value after we pushed 
             paintUI()
         }
 
-        addBtn.addEventListener('click', addTodo)
+        addBtn.addEventListener('click', addTodo) //asign the button to the function 
 
 
         // step 3 - write a function that allows us to delete a todo
@@ -202,13 +211,15 @@
             let current_todo = todo_list[index]
             todoInput.value = current_todo
             deleteTodo(index)
-        }
+        } //this give us the abillity to change the todo and throws it up to the big bar 
 
         // step 5 - persist all information
 
         function saveData() {
             localStorage.setItem('todo-list', JSON.stringify({ todo_list }))
-        }
+        } //localstorage is the browser's database so we can use it anytime 
+
+        //every time we save data it saves the todo list 
 
 
     </script>
